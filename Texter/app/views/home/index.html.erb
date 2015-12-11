@@ -1,0 +1,63 @@
+<div class="container">
+
+
+    <%= flash[:error] %>
+
+
+
+	<div class="row">
+	<% @posts.each do |post| %>
+		<div class="col-sm-6">
+			<div class="item">
+			    <%= hidden_field_tag :user_id, value: post.user_id %>
+				<h1><%= post.title %></h1>
+				<h4><%= post.description %></h4>
+				<h5>1 cool whale fact per day, for 30 days, for $1!</h5>
+				
+				<%= form_for [@user, post, @subscriber], :html => { :id => "chargeForm", :class => "form-inline" } do |f| %>
+				  <div class="form-group">
+				    <%= f.hidden_field :post_id, value: post.id %>
+				    <%= f.hidden_field :user_id, value: post.user_id %>
+				    
+				    <%= f.telephone_field :phone, placeholder: "phone number", class: "form-control", id: "phonenumber" %>
+				  </div>
+				  <%= f.submit "Subscribe", id: "subscribeButton", class: "btn btn-default" %>
+				  
+				  
+				  <script src="https://checkout.stripe.com/checkout.js"></script>
+                  <%= hidden_field_tag 'stripeToken' %>
+                  <%= hidden_field_tag 'stripeEmail' %>
+                  
+                   <script>
+                      var handler = StripeCheckout.configure({
+                      key: 'pk_test_zPwH8mfvYp2jFa9LtjNjjM9b',
+                      image: '#',
+                      token: function(token, args) {
+                            document.getElementById("stripeToken").value = token.id;                              
+                            document.getElementById("stripeEmail").value = token.email;
+                            document.getElementById("chargeForm").submit();
+                          }
+                        });
+                
+                      $(document).on("click", "#subscribeButton", function () {
+                        // Open Checkout with further options
+                        handler.open({
+                          name: 'Texter',
+                          description: 'Subscription ($1.00)',
+                          amount: 100,
+                        });
+                        event.preventDefault();
+                        });
+                      
+                    </script>
+				<% end %>
+				
+				<h6>Text "stop" to unsubscribe</h6>
+			</div>
+		</div>
+		<% end %>
+	</div>
+	
+	
+
+</div>

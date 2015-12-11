@@ -1,0 +1,60 @@
+
+<div class="container">
+
+   <%= flash[:error] %>
+
+<% @posts.each do |post| %>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="item">
+				<h1><%= post.title %></h1>
+				<h4><%= post.description %></h4>
+				<h5>1 cool whale fact per day, for 30 days, for $1!</h5>
+				
+				<%= form_for @subscriber, :html => { :id => "chargeForm", :class => "form-inline" } do |f| %>
+				  <div class="form-group">
+				    <%= f.telephone_field :phone, placeholder: "phone number", class: "form-control", id: "phonenumber" %>
+				  </div>
+				  <%= f.submit "Subscribe", id: "subscribeButton", class: "btn btn-default" %>
+				  
+				  <script src="https://checkout.stripe.com/checkout.js"></script>
+                  <%= hidden_field_tag 'stripeToken' %>
+                  <%= hidden_field_tag 'stripeEmail' %>
+                  
+                   <script>
+                      var handler = StripeCheckout.configure({
+                      key: 'pk_test_zPwH8mfvYp2jFa9LtjNjjM9b',
+                      image: '#',
+                      token: function(token, args) {
+                            document.getElementById("stripeToken").value = token.id;                              
+                            document.getElementById("stripeEmail").value = token.email;
+                            document.getElementById("chargeForm").submit();
+                          }
+                        });
+                
+                      $(document).on("click", "#subscribeButton", function () {
+                        // Open Checkout with further options
+                        handler.open({
+                          name: 'Texter',
+                          description: 'Subscription ($1.00)',
+                          amount: 100,
+                        });
+                        event.preventDefault();
+                        });
+                      
+                    </script>
+				<% end %>
+				
+				<h6>Text "stop" to unsubscribe</h6>
+			</div>
+		</div>
+		<div class="col-sm-6">
+		    <a href="/users/<%= post.user_id %>/posts/<%=post.id %>/edit" class="btn btn-primary">Edit</a>
+		    <%= form_tag(user_post_path(post.user_id, post.id), method: "DELETE") do %>
+                <button type="submit" class="btn btn-danger">Delete Post</button>
+            <% end %>
+		</div>
+	</div>
+<% end %>
+
+</div>

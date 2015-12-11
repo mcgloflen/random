@@ -1,0 +1,29 @@
+// Place all the styles related to the Subscribers controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body { 
+	padding-top: 60px;
+	font-family: fredoka one;
+}
+
+img {
+	width: 350px;
+}
+
+.item {
+	border: 1px solid #CCC;
+	margin: 15px 0 15px 0;
+	padding: 30px;
+	background-image: url("http://www.blueworldtv.com/images/uploads/webisodes/thumbnails/38-sully-pilot-whale.jpg");
+	text-align: center;
+}
+
+.item2 {
+	border: 1px solid #CCC;
+	margin: 15px 0 	15px 0;
+	padding: 30px;
+	text-align: center;
+	color: white;
+	background-image: url("http://7-themes.com/data_images/out/59/6974484-cute-cat-smile.jpg");
+}

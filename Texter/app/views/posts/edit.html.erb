@@ -1,0 +1,35 @@
+<%= form_for [@user, @post], method: "PUT" do |f| %>
+<div class="small-container margin-top-20">
+	<div class="well">
+		<div class="bold">
+			Title
+		</div>
+		<div class="margin-top-20">
+			<%= f.text_field :title %>
+		</div>
+		<div class="bold margin-top-20">
+			Description
+		</div>
+		<div class="margin-top-20">
+			<%= f.text_field :description %>
+		</div>
+		<div class="bold margin-top-20">
+			Text1
+		</div>
+		<div class="margin-top-20">
+			<%= f.text_field :text1 %>
+		</div>
+		<div class="bold margin-top-20">
+			Text2
+		</div>
+		<div class="margin-top-20">
+			<%= f.text_field :text2 %>
+		</div>
+		<div class="margin-top-20 txt-right">
+			<a href="<%= user_posts_path %>" class="btn btn-default">Cancel</a>
+			<button type="submit" class="btn btn-primary">Edit Post</button>
+			
+		</div>
+	</div>
+</div>
+<% end %>
